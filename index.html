@@ -6,6 +6,34 @@
     <title>Biofilm Prediction Tool v8.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Inline helper: set API base early and cache DOM references on DOMContentLoaded -->
+    <script>
+      (function(){
+        try {
+          // Determine API base similar to the snippet you gave
+          const host = window.location.hostname;
+          if (host === '54.237.111.117') {
+            window.API_BASE = 'http://54.237.111.117:8000';
+          } else {
+            window.API_BASE = window.API_BASE || 'http://127.0.0.1:8000';
+          }
+        } catch (e) {
+          window.API_BASE = window.API_BASE || 'http://127.0.0.1:8000';
+        }
+
+        // Attach simple DOMContentLoaded listener to cache common elements
+        document.addEventListener('DOMContentLoaded', () => {
+          window.DOM_CACHE = window.DOM_CACHE || {};
+          window.DOM_CACHE.API_URL = (function(){ return window.API_BASE.replace(/\/$/, ''); })();
+          window.DOM_CACHE.tableBody = document.getElementById('table-body');
+          window.DOM_CACHE.addRowBtn = document.getElementById('add-row-btn');
+          window.DOM_CACHE.findOptimalMixBtn = document.getElementById('find-optimal-mix-btn');
+          // Additional elements you might want
+          window.DOM_CACHE.suggestExperimentBtn = document.getElementById('suggest-experiment-btn');
+          window.DOM_CACHE.exportCsvBtn = document.getElementById('export-csv-btn');
+        });
+      })();
+    </script>
     <script type="module" src="./assets/main.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
