@@ -31,8 +31,9 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # Static UI
-    app.mount("/static", StaticFiles(directory="static"), name="static")
+
+    app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+
 
     # Redirect /ui -> /static/index.html
     @app.get("/ui", include_in_schema=False)
