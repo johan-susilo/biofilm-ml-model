@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biofilm Prediction Tool v8.1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="module" src="./assets/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body class="text-gray-800">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
+      <header class="flex justify-between items-center mb-10">
+        <div class="flex items-center space-x-4">
+          <img src="./assets/icon.png" alt="Logo" class="w-200 h-12" />
+          <div>
+            <h1 class="text-3xl font-extrabold text-[#1A472A]">
+              Biofilm Prediction Tool
+            </h1>
+            <p class="text-gray-500 text-sm">
+              Optimize and predict biofilm removal using enzyme mixtures.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div
+            id="status-dot"
+            class="status-dot bg-yellow-400 animate-pulse"
+          ></div>
+          <span id="status-text" class="text-sm text-yellow-600 font-medium"
+            >Connecting to API...</span
+          >
+          <!-- header copy button removed; per-row copy buttons used instead -->
+        </div>
+      </header>
+
+      <div class="card p-5 mb-8">
+        <h2 class="text-xl font-bold mb-2">Model Overview</h2>
+        <p class="text-sm text-gray-700">
+          Wet‑lab screening of enzyme cocktails is expensive and slow. We trained an XGBoost model on past experiments to predict biofilm degradation (%) from the ratio of Dispersin B (DspB), DNase I, and Proteinase K (ProK). Hence the model can:
+        </p>
+        <ul class="list-disc ml-6 mt-2 text-sm text-gray-700">
+          <li>Suggests a ratio most likely to degrade biofilm.</li>
+          <li>Predicts percentage of degradation, based on user input.</li>
+          <li>Inform feature importance that explains which feature is important.</li>
+        </ul>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-1 flex flex-col gap-8">
+          <div class="card p-6">
+            <h2 class="text-xl font-bold mb-4">Standard Assay Conditions</h2>
+            <div class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    for="fixed-ph"
+                    class="block text-sm font-medium text-gray-500"
+                    >pH</label
+                  ><input
+                    type="number"
+                    id="fixed-ph"
+                    value="7.2"
+                    step="0.1"
+                    disabled
+                    title="This condition is fixed for current version"
+                    class="mt-1 w-full bg-gray-200 border-gray-300 rounded-lg shadow-sm p-2 text-sm cursor-not-allowed opacity-70"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="fixed-temp"
+                    class="block text-sm font-medium text-gray-700"
+                    >Temp (°C)</label
+                  ><input
+                    type="number"
+                    id="fixed-temp"
+                    value="43"
+                    disabled
+                    title="This condition is fixed for current version"
+                    class="mt-1 w-full bg-gray-200 border-gray-300 rounded-lg shadow-sm p-2 text-sm cursor-not-allowed opacity-70"
+                  />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label
+                    for="total-volume"
+                    class="block text-sm font-medium text-gray-700"
+                    >Total Volume (µL)</label
+                  ><input
+                    type="number"
+                    id="total-volume"
+                    value="100"
+                    class="mt-1 w-full bg-gray-100 border-gray-300 rounded-lg shadow-sm p-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="biofilm-age"
+                    class="block text-sm font-medium text-gray-500"
+                    >Biofilm Age (h)</label
+                  ><input
+                    type="number"
+                    id="biofilm-age"
+                    value="24"
+                    disabled
+                    title="This condition is fixed for current version"
+                    class="mt-1 w-full bg-gray-200 border-gray-300 rounded-lg shadow-sm p-2 text-sm cursor-not-allowed opacity-70"
+                  />
+                </div>
+              </div>
+              <!-- Estimated concentration per-row will be computed from server-provided optimal total concentration when available, otherwise a standard fallback is used -->
+              <div>
+                <label
+                  for="control-od"
+                  class="block text-sm font-medium text-gray-700"
+                  >Control OD600 Value</label
+                ><input
+                  type="number"
+                  id="control-od"
+                  step="0.01"
+                  value="0.80"
+                  class="mt-1 w-full bg-gray-100 border-gray-300 rounded-lg shadow-sm p-2 text-sm"
+                />
+              </div>
+            </div>
+            <div class="mt-6 border-t pt-4 space-y-3">
+              <button
+                id="find-optimal-mix-btn"
+                class="w-full px-5 py-2.5 rounded-lg font-semibold text-sm bg-[#A8C899] text-[#1A472A] hover:bg-[#99bb8a] shadow-md transition-colors shadow-md"
+              >
+                Find Optimal Mix
+              </button>
+              
+
+            </div>
+          </div>
+          <div class="card p-6">
+            <h2 class="text-xl font-bold mb-4">Results Summary</h2>
+            <div id="summary-metrics" class="space-y-3 text-sm">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Experiments Run:</span
+                ><span id="summary-count" class="font-bold text-lg">0</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Best Prediction:</span
+                ><span
+                  id="summary-best"
+                  class="font-bold text-lg text-green-600"
+                  >-</span
+                >
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Mean Prediction:</span
+                ><span id="summary-mean" class="font-bold text-lg">-</span>
+              </div>
+            </div>
+          </div>
+          <div class="card p-6">
+            <h2 class="text-xl font-bold mb-4">Prediction Analysis</h2>
+            <div id="analysis-metrics" class="space-y-3 text-sm">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Model Accuracy (MAE):</span
+                ><span id="analysis-mae" class="font-bold text-lg">-</span>
+              </div>
+              <p class="text-xs text-gray-500 italic mt-2">
+                Mean Absolute Error between actual and predicted values.
+              </p>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="card overflow-hidden">
+            <div class="overflow-x-auto custom-scrollbar sticky-header">
+              <table class="w-full" id="experiment-table">
+                <thead class="bg-gray-50">
+                  <tr class="text-left text-sm font-semibold text-gray-600">
+                    <th class="p-4">#</th>
+                    <th class="p-4 min-w-[320px]">Volume Ratios</th>
+                    <th class="p-4">Reaction Time (h)</th>
+                    <th class="p-4">Final OD600 Value</th>
+                    <th class="p-4">Actual</th>
+                    <th class="p-4 min-w-[250px]">Predicted</th>
+                    <th class="p-4">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body" class="divide-y divide-gray-100"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-center gap-4">
+            <button
+              id="suggest-experiment-btn"
+              class="px-5 py-2.5 rounded-lg font-semibold text-sm bg-[#A8C899] text-[#1A472A] hover:bg-[#99bb8a] shadow-md transition-colors"
+              title="Use AI to suggest experiments that would improve the model"
+            >
+              Suggest New Experiment
+            </button>
+            <button
+              id="add-row-btn"
+              class="px-5 py-2.5 rounded-lg font-semibold text-sm bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 shadow-md"
+            >
+              Add Experiment
+            </button>
+            <button
+              id="export-csv-btn"
+              class="px-5 py-2.5 rounded-lg font-semibold text-sm bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 shadow-md"
+            >
+              Export CSV
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ML Experiment Suggestions Section -->
+      <div id="suggestions-section" class="mt-8" style="display: none;">
+        <div class="card p-6">
+          <h2 class="text-xl font-bold mb-4">ML-Suggested Experiments</h2>
+          <p class="text-sm text-gray-600 mb-4">
+            These experiments are suggested by the ML model to improve model accuracy. They prioritize high uncertainty regions where new data would be most valuable.
+          </p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-gray-200">
+                  <th class="text-left py-3 px-4 font-semibold">Experiment</th>
+                  <th class="text-left py-3 px-4 font-semibold">DSPB</th>
+                  <th class="text-left py-3 px-4 font-semibold">DNase</th>
+                  <th class="text-left py-3 px-4 font-semibold">ProK</th>
+                  <th class="text-left py-3 px-4 font-semibold">Time (h)</th>
+                  <th class="text-left py-3 px-4 font-semibold">Predicted (%)</th>
+                  <th class="text-left py-3 px-4 font-semibold">Uncertainty (%)</th>
+                  <th class="text-left py-3 px-4 font-semibold">Action</th>
+                </tr>
+              </thead>
+              <tbody id="suggestions-table-body">
+                <!-- Suggestions will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full-width Feature Importance -->
+      <div class="mt-8">
+        <div class="card p-6">
+          <h2 class="text-xl font-bold mb-4">Top Feature Importances</h2>
+          <p class="text-sm text-gray-600 mb-6">Which Factors Matter Most for Biofilm Removal</p>
+          <div class="w-full overflow-hidden">
+            <div id="plot-feature-importance" class="min-h-[550px] w-full"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ternary Plots: Side-by-side on large screens, stacked on small screens -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 mb-8">
+        <div class="card p-6">
+          <h2 class="text-xl font-bold mb-4">
+            Enzyme Ratio vs. Predicted Removal
+          </h2>
+          <div class="w-full overflow-hidden">
+            <div id="ternary-predicted-plot" class="min-h-[450px] w-full"></div>
+          </div>
+        </div>
+        <div class="card p-6">
+          <h2 class="text-xl font-bold mb-4">Enzyme Ratio vs. Actual Removal (from OD600)</h2>
+          <div class="w-full overflow-hidden">
+            <div id="ternary-actual-plot" class="min-h-[450px] w-full"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

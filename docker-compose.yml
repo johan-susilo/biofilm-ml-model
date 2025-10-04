@@ -1,0 +1,95 @@
+services:
+  # Main biofilm prediction API service
+  biofilm-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: biofilm-prediction-api
+    ports:
+      - "8000:8000"
+    environment:
+      - BIOFILM_API_HOST=0.0.0.0
+      - BIOFILM_API_PORT=8000
+      - PYTHONPATH=/app
+    volumes:
+      # Mount models directory for persistence
+      - ./ml-model:/app/ml-model:ro
+      # Mount logs directory for output
+      - ./logs:/app/logs
+      # Mount data directory for training data
+      - ./data:/app/data:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      - biofilm-network
+    command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  # Development service with Jupyter notebook access
+  biofilm-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: biofilm-prediction-dev
+    ports:
+      - "8888:8888"  # Jupyter
+      - "8001:8000"  # API (alternative port)
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - PYTHONPATH=/app
+    volumes:
+      # Mount entire project for development
+      - .:/app
+      # Mount data directory
+      - ./data:/app/data
+    working_dir: /app
+    command: >
+      sh -c "
+        echo 'Starting development environment...' &&
+        jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --notebook-dir=/app &
+        uvicorn api.main:app --host 0.0.0.0 --port 8000
+      "
+    networks:
+      - biofilm-network
+    profiles:
+      - dev
+
+  # Model training service
+  biofilm-trainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: biofilm-prediction-trainer
+    environment:
+      - PYTHONPATH=/app
+    volumes:
+      # Mount model directory for output
+      - ./ml-model:/app/ml-model
+      # Mount data directory for training data
+      - ./data:/app/data:ro
+      # Mount logs for training output
+      - ./logs:/app/logs
+    working_dir: /app/ml-model
+    command: python train.py
+    networks:
+      - biofilm-network
+    profiles:
+      - training
+
+networks:
+  biofilm-network:
+    driver: bridge
+
+volumes:
+  # Named volumes for persistent data
+  biofilm-models:
+    driver: local
+  biofilm-logs:
+    driver: local

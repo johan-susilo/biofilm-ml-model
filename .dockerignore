@@ -1,0 +1,82 @@
+# Docker ignore file for biofilm prediction API
+# Exclude unnecessary files from Docker build context
+
+# Version control
+.git
+.gitignore
+.github
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.pytest_cache
+venv/
+.venv/
+
+# IDEs
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation build
+docs/_build
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Logs
+*.log
+logs/*
+!logs/.gitkeep
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Backup files
+*.backup
+*.bak
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Scripts that are not needed in container
+install.sh
+start.sh
+test.sh
+*.sh
+!docker-*.sh
+
+# Development files
+README.md
+ARCHITECTURE.md
+*.md
+!requirements.txt
+
+# Large datasets (keep only essential training data)
+data/*
+!ml-model/polished.csv
