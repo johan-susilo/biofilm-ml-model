@@ -1,0 +1,27 @@
+{
+  # Optional: reduce noisy logs
+  # debug
+  email admin@example.com
+}
+
+# Public HTTPS endpoint for the API using sslip.io
+# Replace with your own domain later if desired.
+54-237-111-117.sslip.io {
+  encode zstd gzip
+
+  # Forward all requests to FastAPI service
+  reverse_proxy biofilm-api:8000
+
+  # Basic hardening
+  header {
+    X-Content-Type-Options nosniff
+    X-Frame-Options DENY
+    Referrer-Policy no-referrer
+  }
+
+  log {
+    output stdout
+    format console
+  }
+}
+

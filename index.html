@@ -10,9 +10,12 @@
     <script>
       (function(){
         try {
-          // Determine API base similar to the snippet you gave
+          // Determine API base for different environments
           const host = window.location.hostname;
-          if (host === '54.237.111.117') {
+          if (host && host.endsWith('github.io')) {
+            // Use HTTPS endpoint backed by sslip.io domain
+            window.API_BASE = 'https://54-237-111-117.sslip.io';
+          } else if (host === '54.237.111.117') {
             window.API_BASE = 'http://54.237.111.117:8000';
           } else {
             window.API_BASE = window.API_BASE || 'http://127.0.0.1:8000';

@@ -30,6 +30,23 @@ services:
       - biofilm-network
     command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
+  # HTTPS reverse proxy with automatic TLS via Let's Encrypt
+  caddy:
+    image: caddy:2
+    container_name: biofilm-prediction-caddy
+    restart: unless-stopped
+    depends_on:
+      - biofilm-api
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - biofilm-network
+
   # Development service with Jupyter notebook access
   biofilm-dev:
     build:
@@ -92,4 +109,8 @@ volumes:
   biofilm-models:
     driver: local
   biofilm-logs:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
     driver: local

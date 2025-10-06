@@ -1,0 +1,561 @@
+nohup: ignoring input
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/xgboost/core.py:377: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc >= 2.28) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+INFO:     Started server process [90506]
+INFO:     Waiting for application startup.
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator DecisionTreeRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator RandomForestRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+nohup: ignoring input
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/xgboost/core.py:377: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc >= 2.28) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+INFO:     Started server process [92116]
+INFO:     Waiting for application startup.
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator DecisionTreeRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator RandomForestRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:35996 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35996 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45300 - "OPTIONS /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45300 - "POST /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45300 - "OPTIONS /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45300 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45300 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45308 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45308 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45308 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45308 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54736 - "GET / HTTP/1.1" 200 OK
+INFO:     205.210.31.143:60146 - "GET / HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     45.43.33.218:45731 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53680 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53680 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53680 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53680 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49138 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49138 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49670 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59330 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52482 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35398 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35398 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35398 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35398 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35398 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35398 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35398 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35398 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39032 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52254 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52254 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52254 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52254 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49202 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49202 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49202 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49202 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43896 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43896 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43896 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43896 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34284 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34284 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34284 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34284 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34284 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34284 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34284 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34284 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56450 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+nohup: ignoring input
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/xgboost/core.py:377: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc >= 2.28) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+INFO:     Started server process [100961]
+INFO:     Waiting for application startup.
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator DecisionTreeRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator RandomForestRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "OPTIONS /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "POST /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "OPTIONS /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "POST /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55478 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /optimal-mix HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /feature-importance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /training-schema-stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46914 - "GET / HTTP/1.1" 200 OK
+nohup: ignoring input
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/xgboost/core.py:377: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc >= 2.28) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+INFO:     Started server process [101036]
+INFO:     Waiting for application startup.
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator DecisionTreeRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator RandomForestRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8000): address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+nohup: ignoring input
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/xgboost/core.py:377: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc >= 2.28) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+ERROR:    Error loading ASGI app. Attribute "api" not found in module "api.main".
+nohup: ignoring input
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/xgboost/core.py:377: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc >= 2.28) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+INFO:     Started server process [101117]
+INFO:     Waiting for application startup.
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator DecisionTreeRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+/home/ec2-user/anaconda3/lib/python3.13/site-packages/sklearn/base.py:380: InconsistentVersionWarning: Trying to unpickle estimator RandomForestRegressor from version 1.3.2 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+  warnings.warn(
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)

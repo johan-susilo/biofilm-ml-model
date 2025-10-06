@@ -22,10 +22,17 @@ def create_app() -> FastAPI:
         description="Predict biofilm removal effectiveness using enzyme combinations",
     )
 
-    # CORS settings (allow all origins)
+    # CORS settings – allow GitHub Pages and local dev
+    allowed_origins = [
+        "https://johan-susilo.github.io",  # GitHub Pages origin
+        "http://localhost:8000",           # local dev
+        "http://127.0.0.1:8000",          # local dev
+        "https://54-237-111-117.sslip.io", # public API origin (docs, manual tests)
+    ]
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=allowed_origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

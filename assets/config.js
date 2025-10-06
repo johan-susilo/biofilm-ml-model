@@ -21,6 +21,12 @@ export const API_URL = (function(){
   try {
     if (window.API_BASE) return String(window.API_BASE).replace(/\/$/, '');
     const { protocol, hostname, port, origin, pathname } = window.location;
+
+    // If running on GitHub Pages, use the public HTTPS API endpoint
+    if (hostname && hostname.endsWith('github.io')) {
+      // Use sslip.io domain that maps to your server IP and supports HTTPS
+      return 'https://54-237-111-117.sslip.io';
+    }
     if (protocol.startsWith('http')) {
       if (port === '8000' || pathname.startsWith('/static') || pathname.startsWith('/ui')) {
         return origin.replace(/\/$/, '');
