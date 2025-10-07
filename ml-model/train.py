@@ -1,254 +1,232 @@
+"""Train models for the Biofilm Prediction API using data/polished.csv.
+
+Best practices for reliability and consistency:
+- Deterministic seeds across libraries
+- Enzyme feature normalization consistent with inference
+- Target scaling to [0, 1] if dataset is 0..100
+- Nested CV hyperparameter tuning with Optuna (inner xgb.cv)
+- Final model retraining with optimal rounds
+- Separate RandomForest model for uncertainty estimation
+
+Outputs under ml-model/ (repo root):
+- xgb_biofilm_model.json (XGBoost Booster)
+- rf_uncertainty_model.joblib (RandomForestRegressor)
+"""
+
+from __future__ import annotations
+
+import warnings
+from pathlib import Path
+from typing import Dict, Tuple
+
+import joblib
 import numpy as np
+import optuna
 import pandas as pd
 import xgboost as xgb
-import optuna
-import joblib
-from sklearn.model_selection import KFold
-from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import KFold
 
-# --- Global Seed for Reproducibility ---
+
+# ---------------------------
+# Configuration
+# ---------------------------
 SEED = 42
-TRIAL = 100 # Reduced for faster demonstration, you can set it back to 500
+N_TRIALS = 100  # Adjust for speed vs. thoroughness
+N_OUTER_SPLITS = 5
+N_INNER_SPLITS = 5
+FEATURES = ["dspb", "dnase", "prok", "reaction_time"]
+ENZYME_FEATURES = ["dspb", "dnase", "prok"]
+
 np.random.seed(SEED)
 
-# --- Nested CV Configuration ---
-N_OUTER_SPLITS = 5
-N_INNER_SPLITS = 5 # Used by xgb.cv internally
 
-print(" XGBOOST OPTIMIZATION (with Final Production Fixes)")
-print("=" * 60)
+def _project_root() -> Path:
+    return Path(__file__).resolve().parents[1]
 
-# --- Load and prepare data ---
-try:
-    df = pd.read_csv("polished.csv")
-except FileNotFoundError:
-    print("Error: 'polished.csv' not found. Please ensure the dataset is available.")
-    data = {'dspb': np.random.rand(100)*10, 'dnase': np.random.rand(100)*10, 'prok': np.random.rand(100)*10, 'reaction_time': np.random.uniform(1, 48, 100), 'degrade': np.random.rand(100) * 100}
-    df = pd.DataFrame(data)
-    print(" Using a dummy dataset for demonstration.")
 
-print(f" Dataset Loaded: {df.shape[0]} samples, {df.shape[1]} features")
+def load_dataset() -> pd.DataFrame:
+    # Prefer repo-root data/polished.csv regardless of CWD
+    candidates = [
+        _project_root() / "data" / "polished.csv",
+        Path("../data/polished.csv").resolve(),
+        Path("data/polished.csv").resolve(),
+    ]
+    for p in candidates:
+        if p.exists():
+            df = pd.read_csv(p)
+            print(f"Loaded dataset: {p} -> {df.shape[0]} rows, {df.shape[1]} cols")
+            return df
 
-# --- Feature Engineering & Normalization ---
-features = ['dspb', 'dnase', 'prok', 'reaction_time']
-enzyme_features = ['dspb', 'dnase', 'prok']
+    raise FileNotFoundError("polished.csv not found in expected locations.")
 
-print("   normalizing enzyme features to ensure train/inference consistency...")
-enzyme_totals = df[enzyme_features].sum(axis=1)
-# Avoid division by zero for rows where all enzymes are 0
-df[enzyme_features] = df[enzyme_features].div(enzyme_totals.replace(0, 1), axis=0)
 
-X = df[features].values
-y = df['degrade'].values
+def preprocess(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
+    # Basic column validation
+    missing = [c for c in FEATURES + ["degrade"] if c not in df.columns]
+    if missing:
+        raise ValueError(f"Missing required columns: {missing}")
 
-print(f"Using {len(features)} features: {features}")
+    df = df.copy()
 
-# --- Nested Cross-Validation for Robust Evaluation ---
-outer_cv = KFold(n_splits=N_OUTER_SPLITS, shuffle=True, random_state=SEED)
-outer_fold_scores = []
+    # Drop obvious bad rows and coerce numeric
+    for c in FEATURES + ["degrade"]:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    df = df.dropna(subset=FEATURES + ["degrade"]).reset_index(drop=True)
 
-print(f"\n Starting Nested Cross-Validation ({N_OUTER_SPLITS} outer folds)...")
+    # Normalize enzyme ratios to sum==1 (avoid divide by zero)
+    totals = df[ENZYME_FEATURES].sum(axis=1).replace(0, np.nan)
+    df.loc[:, ENZYME_FEATURES] = df[ENZYME_FEATURES].div(totals, axis=0)
+    df.loc[:, ENZYME_FEATURES] = df[ENZYME_FEATURES].fillna(1.0 / 3)
 
-for fold_idx, (train_idx, test_idx) in enumerate(outer_cv.split(X, y)):
-    print(f"\n===== Outer Fold {fold_idx + 1}/{N_OUTER_SPLITS} =====")
-    X_train_outer, X_test_outer = X[train_idx], X[test_idx]
-    y_train_outer, y_test_outer = y[train_idx], y[test_idx]
-    
-    dtrain_fold = xgb.DMatrix(X_train_outer, label=y_train_outer, feature_names=features)
+    # Harmonize target scale for consistency with API
+    y = df["degrade"].astype(float).values
+    if np.nanmax(y) > 1.5:  # if percentages 0..100
+        y = y / 100.0
+    # Do not clip negatives: the API clamps at display time only
 
-    def xgb_objective(trial):
+    X = df[FEATURES].astype(float).values
+    return X, y
+
+
+def tune_with_cv(dtrain: xgb.DMatrix) -> Dict:
+    def objective(trial: optuna.Trial) -> float:
         params = {
-            'objective': 'reg:squarederror',
-            'eval_metric': 'rmse',
-            'random_state': SEED,
-            'max_depth': trial.suggest_int('max_depth', 3, 6),
-            'learning_rate': trial.suggest_float('learning_rate', 0.01, 0.2),
-            'subsample': trial.suggest_float('subsample', 0.6, 0.9),
-            'colsample_bytree': trial.suggest_float('colsample_bytree', 0.6, 0.9),
-            'min_child_weight': trial.suggest_int('min_child_weight', 1, 10),
-            'reg_alpha': trial.suggest_float('reg_alpha', 0.01, 10.0, log=True),
-            'reg_lambda': trial.suggest_float('reg_lambda', 0.01, 10.0, log=True),
+            "objective": "reg:squarederror",
+            "eval_metric": "rmse",
+            "random_state": SEED,
+            "seed": SEED,
+            # conservative, generalizable space
+            "max_depth": trial.suggest_int("max_depth", 3, 8),
+            "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.2),
+            "subsample": trial.suggest_float("subsample", 0.6, 1.0),
+            "colsample_bytree": trial.suggest_float("colsample_bytree", 0.6, 1.0),
+            "min_child_weight": trial.suggest_int("min_child_weight", 1, 20),
+            "reg_alpha": trial.suggest_float("reg_alpha", 1e-3, 10.0, log=True),
+            "reg_lambda": trial.suggest_float("reg_lambda", 1e-3, 10.0, log=True),
+            "nthread": -1,
         }
-        n_estimators = trial.suggest_int('n_estimators', 100, 700)
-        cv_results = xgb.cv(
-            params=params, 
-            dtrain=dtrain_fold, 
-            num_boost_round=n_estimators, 
-            nfold=N_INNER_SPLITS, 
-            seed=SEED, 
+        num_boost_round = trial.suggest_int("n_estimators", 200, 1200)
+        cv = xgb.cv(
+            params=params,
+            dtrain=dtrain,
+            num_boost_round=num_boost_round,
+            nfold=N_INNER_SPLITS,
+            seed=SEED,
             as_pandas=True,
-            early_stopping_rounds=30,
-            shuffle=True
+            early_stopping_rounds=50,
+            shuffle=True,
+            verbose_eval=False,
         )
-        best_rounds = int(cv_results.shape[0])
-        trial.set_user_attr("best_rounds", best_rounds)
-        return cv_results['test-rmse-mean'].iloc[-1]
+        trial.set_user_attr("best_rounds", int(cv.shape[0]))
+        return float(cv["test-rmse-mean"].iloc[-1])
 
-    print("  Tuning hyperparameters (inner CV)...")
     sampler = optuna.samplers.TPESampler(seed=SEED)
-    study = optuna.create_study(direction='minimize', sampler=sampler)
-    study.optimize(xgb_objective, n_trials=TRIAL, show_progress_bar=False, n_jobs=-1)
+    study = optuna.create_study(direction="minimize", sampler=sampler)
+    study.optimize(objective, n_trials=N_TRIALS, show_progress_bar=False, n_jobs=-1)
+    best = dict(study.best_params)
+    best_rounds = int(study.best_trial.user_attrs["best_rounds"])  # type: ignore[index]
+    best.pop("n_estimators", None)
+    return {"params": best, "rounds": best_rounds, "study": study}
 
-    best_params_fold = {
-        'objective': 'reg:squarederror',
-        'eval_metric': 'rmse',
-        'random_state': SEED,
+
+def nested_cv_eval(X: np.ndarray, y: np.ndarray) -> Dict[str, float]:
+    kf = KFold(n_splits=N_OUTER_SPLITS, shuffle=True, random_state=SEED)
+    r2s, rmses = [], []
+    print(f"\nStarting Nested Cross-Validation ({N_OUTER_SPLITS} outer folds)...")
+    for i, (tr, te) in enumerate(kf.split(X, y), start=1):
+        print(f"  Fold {i}/{N_OUTER_SPLITS}")
+        dtrain = xgb.DMatrix(X[tr], label=y[tr], feature_names=FEATURES)
+        dtest = xgb.DMatrix(X[te], label=y[te], feature_names=FEATURES)
+
+        tuned = tune_with_cv(dtrain)
+        params = {
+            "objective": "reg:squarederror",
+            "eval_metric": "rmse",
+            "random_state": SEED,
+            "seed": SEED,
+            "nthread": -1,
+            **tuned["params"],
+        }
+        model = xgb.train(params=params, dtrain=dtrain, num_boost_round=tuned["rounds"])
+        preds = model.predict(dtest)
+        r2s.append(r2_score(y[te], preds))
+        rmses.append(mean_squared_error(y[te], preds, squared=False))
+        print(f"    R²={r2s[-1]:.3f} RMSE={rmses[-1]:.3f} rounds={tuned['rounds']}")
+
+    return {
+        "r2_mean": float(np.mean(r2s)),
+        "r2_std": float(np.std(r2s)),
+        "rmse_mean": float(np.mean(rmses)),
+        "rmse_std": float(np.std(rmses)),
     }
-    best_params_fold.update(study.best_params) # Add tuned params
-    best_params_fold.pop('n_estimators', None)
-    
-    best_rounds_fold = int(study.best_trial.user_attrs["best_rounds"])
-    
-    final_model_fold = xgb.train(
-        params=best_params_fold,
-        dtrain=dtrain_fold,
-        num_boost_round=best_rounds_fold
-    )
-    
-    dtest_fold = xgb.DMatrix(X_test_outer, feature_names=features)
-    preds = final_model_fold.predict(dtest_fold)
-    
-    r2 = r2_score(y_test_outer, preds)
-    rmse = np.sqrt(mean_squared_error(y_test_outer, preds))
-    outer_fold_scores.append({'r2': r2, 'rmse': rmse})
-    
-    print(f"   Fold {fold_idx + 1} Results -> R²: {r2:.3f}, RMSE: {rmse:.3f} (trained for {best_rounds_fold} rounds)")
 
-print("\n" + "="*60)
-print(" Nested Cross-Validation Final Performance")
-print("="*60)
-avg_r2 = np.mean([score['r2'] for score in outer_fold_scores])
-std_r2 = np.std([score['r2'] for score in outer_fold_scores])
-avg_rmse = np.mean([score['rmse'] for score in outer_fold_scores])
-std_rmse = np.std([score['rmse'] for score in outer_fold_scores])
 
-print(f"Average R²:   {avg_r2:.3f} ± {std_r2:.3f}")
-print(f"Average RMSE: {avg_rmse:.3f} ± {std_rmse:.3f}")
+def train_final_models(X: np.ndarray, y: np.ndarray) -> Tuple[xgb.Booster, RandomForestRegressor, Dict]:
+    d_full = xgb.DMatrix(X, label=y, feature_names=FEATURES)
+    tuned = tune_with_cv(d_full)
+    print(f"\nBest params (final): {tuned['params']}")
+    print(f"Best rounds (final): {tuned['rounds']}")
 
-print("\n Training Final Models on the ENTIRE Dataset for Deployment...")
-d_full = xgb.DMatrix(X, label=y, feature_names=features)
-
-def final_objective(trial):
     params = {
-        'objective': 'reg:squarederror', 'eval_metric': 'rmse', 'random_state': SEED,
-        'max_depth': trial.suggest_int('max_depth', 3, 6),
-        'learning_rate': trial.suggest_float('learning_rate', 0.01, 0.2),
-        'subsample': trial.suggest_float('subsample', 0.6, 0.9),
-        'colsample_bytree': trial.suggest_float('colsample_bytree', 0.6, 0.9),
-        'min_child_weight': trial.suggest_int('min_child_weight', 1, 10),
-        'reg_alpha': trial.suggest_float('reg_alpha', 0.01, 10.0, log=True),
-        'reg_lambda': trial.suggest_float('reg_lambda', 0.01, 10.0, log=True),
+        "objective": "reg:squarederror",
+        "eval_metric": "rmse",
+        "random_state": SEED,
+        "seed": SEED,
+        "nthread": -1,
+        **tuned["params"],
     }
-    n_estimators = trial.suggest_int('n_estimators', 100, 700)
-    cv_results = xgb.cv(
-        params=params, dtrain=d_full, num_boost_round=n_estimators, 
-        nfold=N_INNER_SPLITS, seed=SEED, as_pandas=True,
-        early_stopping_rounds=30,
-        shuffle=True 
-    )
-    best_rounds = int(cv_results.shape[0])
-    trial.set_user_attr("best_rounds", best_rounds)
-    return cv_results['test-rmse-mean'].iloc[-1]
+    xgb_model = xgb.train(params=params, dtrain=d_full, num_boost_round=tuned["rounds"])
 
-print("  Re-tuning hyperparameters on all data...")
-final_sampler = optuna.samplers.TPESampler(seed=SEED)
-final_study = optuna.create_study(direction='minimize', sampler=final_sampler)
-final_study.optimize(final_objective, n_trials=TRIAL, show_progress_bar=False, n_jobs=-1)
+    # More trees provide more stable std across estimators
+    rf_model = RandomForestRegressor(n_estimators=300, random_state=SEED, n_jobs=-1)
+    rf_model.fit(X, y)
+    return xgb_model, rf_model, tuned
 
-best_params_final = {
-    'objective': 'reg:squarederror',
-    'eval_metric': 'rmse',
-    'random_state': SEED,
-}
-best_params_final.update(final_study.best_params)
-best_params_final.pop('n_estimators', None)
-best_rounds_final = int(final_study.best_trial.user_attrs["best_rounds"])
 
-print(f"\nBest params for final model: {final_study.best_params}")
-print(f"Optimal rounds for final model: {best_rounds_final}")
+def save_models(xgb_model: xgb.Booster, rf_model: RandomForestRegressor) -> None:
+    out_dir = _project_root() / "ml-model"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    xgb_path = out_dir / "xgb_biofilm_model.json"
+    rf_path = out_dir / "rf_uncertainty_model.joblib"
+    xgb_model.save_model(str(xgb_path))
+    joblib.dump(rf_model, str(rf_path))
+    print(f"Saved XGB to {xgb_path}")
+    print(f"Saved RF  to {rf_path}")
 
-xgb_model = xgb.train(
-    params=best_params_final,
-    dtrain=d_full,
-    num_boost_round=best_rounds_final
-)
-print("  Final XGBoost model trained.")
 
-rf_model = RandomForestRegressor(n_estimators=100, random_state=SEED)
-rf_model.fit(X, y)
-print("   Final Random Forest model trained.")
+def main() -> None:
+    warnings.filterwarnings("ignore", category=UserWarning)
+    print("Biofilm Model Training")
+    print("=" * 60)
 
-def predict_with_uncertainty(dspb, dnase, prok, reaction_time):
-    # This normalization is now consistent with the training data
-    total = max(dspb + dnase + prok, 1e-12)
-    dspb_n, dnase_n, prok_n = dspb / total, dnase / total, prok / total
-    row = np.array([[dspb_n, dnase_n, prok_n, reaction_time]])
-    drow = xgb.DMatrix(row, feature_names=features)
-    xgb_pred = float(xgb_model.predict(drow)[0])
-    tree_preds = [tree.predict(row)[0] for tree in rf_model.estimators_]
-    uncertainty = float(np.std(tree_preds))
-    return xgb_pred, uncertainty
+    df = load_dataset()
+    X, y = preprocess(df)
+    print(f"Using features: {FEATURES}")
+    print(f"Target stats (scaled): min={y.min():.3f} max={y.max():.3f} mean={y.mean():.3f}")
 
-def find_best_mixture(reaction_time=24.0):
-    def objective(trial):
-        dspb = trial.suggest_float('dspb', 0.0, 1.0)
-        dnase = trial.suggest_float('dnase', 0.0, 1.0 - dspb)
-        prok = 1.0 - dspb - dnase
-        pred, _ = predict_with_uncertainty(dspb, dnase, prok, reaction_time)
-        return pred
-    
-    sampler = optuna.samplers.TPESampler(seed=SEED)
-    study_mix = optuna.create_study(direction='maximize', sampler=sampler)
-    study_mix.optimize(objective, n_trials=TRIAL, show_progress_bar=False)
+    metrics = nested_cv_eval(X, y)
+    print("\nNested CV Summary (target 0..1):")
+    print(f"  R²:   {metrics['r2_mean']:.3f} ± {metrics['r2_std']:.3f}")
+    print(f"  RMSE: {metrics['rmse_mean']:.3f} ± {metrics['rmse_std']:.3f}")
 
-    best_dspb = study_mix.best_params['dspb']
-    best_dnase = study_mix.best_params['dnase']
-    best_prok = 1.0 - best_dspb - best_dnase
-    pred, uncertainty = predict_with_uncertainty(best_dspb, best_dnase, best_prok, reaction_time)
-    
-    print(f"\n Best mixture for {reaction_time}h reaction:")
-    print(f"  DSPB: {best_dspb:.3f}, DNase: {best_dnase:.3f}, Prok: {best_prok:.3f}")
-    print(f"  Predicted degradation: {pred:.3f} ± {uncertainty:.3f}")
-    return (best_dspb, best_dnase, best_prok), pred, uncertainty
+    xgb_model, rf_model, tuned = train_final_models(X, y)
+    save_models(xgb_model, rf_model)
 
-best_mixture, best_pred, best_unc = find_best_mixture()
+    # Simple feature importance printout (F-score)
+    try:
+        importance = xgb_model.get_fscore()
+        if importance:
+            ordered = sorted(importance.items(), key=lambda kv: kv[1], reverse=True)
+            print("\nFeature importance (F-score):")
+            for k, v in ordered:
+                print(f"  {k}: {v}")
+    except Exception:
+        pass
 
-def suggest_next_experiments(reaction_time=24.0, n_suggestions=5):
-    print(f"\n Active Learning Suggestions for {reaction_time}h reaction:")
-    candidates = []
-    random_points = np.random.dirichlet(np.ones(3), size=2000)
-    for point in random_points:
-        dspb, dnase, prok = point[0], point[1], point[2]
-        pred, uncertainty = predict_with_uncertainty(dspb, dnase, prok, reaction_time)
-        acquisition_score = pred + 1.5 * uncertainty
-        candidates.append({'dspb': dspb, 'dnase': dnase, 'prok': prok, 'prediction': pred, 'uncertainty': uncertainty, 'score': acquisition_score})
-    
-    candidates.sort(key=lambda x: x['score'], reverse=True)
-    for i, candidate in enumerate(candidates[:n_suggestions]):
-        print(f"\nExperiment {i+1}: DSPB: {candidate['dspb']:.3f}, DNase: {candidate['dnase']:.3f}, Prok: {candidate['prok']:.3f}")
-        print(f"  Predicted: {candidate['prediction']:.3f}, Uncertainty: {candidate['uncertainty']:.3f}, Score: {candidate['score']:.3f}")
-    return candidates
+    print("\nDone.")
 
-next_experiments = suggest_next_experiments()
 
-print(f"\n XGBoost Feature Importance:")
-importance_scores = xgb_model.get_fscore()
-sorted_importance = sorted(importance_scores.items(), key=lambda item: item[1], reverse=True)
-for feature, importance in sorted_importance:
-    print(f"  {feature}: {importance}")
-
-print("\n Saving models...")
-xgb_model_filename = "xgb_biofilm_model.json"
-xgb_model.save_model(xgb_model_filename)
-print(f"- XGBoost model saved to: {xgb_model_filename}")
-
-rf_model_filename = "rf_uncertainty_model.joblib"
-joblib.dump(rf_model, rf_model_filename)
-print(f"- Random Forest model saved to: {rf_model_filename}")
-
-print(f"\n SUMMARY:")
-print(f"- Model performance robustly estimated with {N_OUTER_SPLITS}-fold nested CV.")
-print(f"- Final models trained on all data for prediction.")
-print(f"- Best 3-enzyme mixture identified for 24h reaction.")
-print(f"- {len(next_experiments)} new experiments suggested by active learning.")
+if __name__ == "__main__":
+    main()
